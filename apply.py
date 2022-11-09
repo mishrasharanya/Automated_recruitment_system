@@ -7,80 +7,160 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfile 
 import time
+import math
+import string
+import sys
 a=Tk()
 var=IntVar()
 checkvar1=IntVar()
 checkvar2=IntVar()
 checkvar3=IntVar()
+my_str = tk.StringVar()
+my_str.set("")
+
+
+
 def sel():
-    selection='you selected the option'+ str(var.get())
-    label.config(text=selection)
+    e=Tk()
+    e.geometry("300x200")
+    l6=Label(e, text='CONGRATULATIONS, YOU ARE SHORTLISTED FOR THE INTERVIEW ROUND')
+    l6.grid(row=0,column=7)
 def yoo():
     e=Tk()
     e.geometry("300x200")
-    l6=Label(e, text="You are done Thanks for applying")
+    l6=Label(e, text="THANK YOU FOR APPLYING, BETTER LUCK NEXT TIME!!")
     l6.grid(row=0,column=7)
+
+
+
+
+def read_file(filename):
+	
+	try:
+		with open(filename, 'r') as f:
+			data = f.read()
+		return data
+	
+	except IOError:
+		print("Error opening or reading input file: ", filename)
+		sys.exit()
+translation_table = str.maketrans(string.punctuation+string.ascii_uppercase," "*len(string.punctuation)+string.ascii_lowercase)
+# splitting the text lines into words
+# translation table is a global variable
+# mapping upper case to lower case and
+# punctuation to spaces
+translation_table = str.maketrans(string.punctuation+string.ascii_uppercase,
+									" "*len(string.punctuation)+string.ascii_lowercase)
+	
+# returns a list of the words
+# in the file
+def get_words_from_line_list(text):
+	
+	text = text.translate(translation_table)
+	word_list = text.split()
+	
+	return word_list
+
+
+# counts frequency of each word
+# returns a dictionary which maps
+# the words to their frequency.
+def count_frequency(word_list):
+	
+	D = {}
+	
+	for new_word in word_list:
+		
+		if new_word in D:
+			D[new_word] = D[new_word] + 1
+			
+		else:
+			D[new_word] = 1
+			
+	return D
+
+# returns dictionary of (word, frequency)
+# pairs from the previous dictionary.
+def word_frequencies_for_file(filename):
+	
+	line_list = read_file(filename)
+	word_list = get_words_from_line_list(line_list)
+	freq_mapping = count_frequency(word_list)
+
+	print("File", filename, ":", )
+	print(len(line_list), "lines, ", )
+	print(len(word_list), "words, ", )
+	print(len(freq_mapping), "distinct words")
+
+	return freq_mapping
+
+
+# returns the dot product of two documents
+def dotProduct(D1, D2):
+	Sum = 0.0
+	
+	for key in D1:
+		
+		if key in D2:
+			Sum += (D1[key] * D2[key])
+			
+	return Sum
+
+# returns the angle in radians
+# between document vectors
+def vector_angle(D1, D2):
+	numerator = dotProduct(D1, D2)
+	denominator = math.sqrt(dotProduct(D1, D1)*dotProduct(D2, D2))
+	
+	return math.acos(numerator / denominator)
+
+
+def documentSimilarity(filename_1, filename_2):
+	
+# filename_1 = sys.argv[1]
+# filename_2 = sys.argv[2]
+	sorted_word_list_1 = word_frequencies_for_file(filename_1)
+	sorted_word_list_2 = word_frequencies_for_file(filename_2)
+	distance = vector_angle(sorted_word_list_1, sorted_word_list_2)
+	
+	if(distance>0.35):
+            yoo()
+	else:
+            sel()
+            
+
+
+
+    
 def done1():
-    file = filedialog.askopenfilename()
-    if(file):
-        my_str.set(file)
-        fob=open(file,'r')
+    file1 = filedialog.askopenfilename()
+    #file2 = filedialog.askopenfilename()
+    if(file1):
+        #my_str.set(file1)
+        #my_str.set(file2)
+        #fob=open(file1,'r')
+        documentSimilarity("zon.txt","com_zon.txt" )
         
 
 
 def done2():
-    file = filedialog.askopenfilename()
-    if(file):
-        my_str.set(file)
-        fob=open(file,'r')
+    file1 = filedialog.askopenfilename()
+    #file2 = filedialog.askopenfilename()
+    if(file1):
+        #my_str.set(file1)
+        #my_str.set(file2)
+        #fob=open(file1,'r')
+        documentSimilarity("zon.txt","com_xea.txt" )
 def done3():
 
-    file = filedialog.askopenfilename()
-    if(file):
-        my_str.set(file)
-        fob=open(file,'r')
-'''
-def apply3():
-    g=Tk()
-    g.geometry("800x800")
-    l4=Label(g, text="Select post")
-    l4.grid(row=0,column=0,padx=20,pady=30)
-    l5=Label(g, text="Assistant professor (salary:100000,Collage:Anna University,Qualification:Phd holder in computer science)")
-    l5.grid(row=1,column=0,padx=20,pady=30)
-    b3=Button(g,text="Next",command=processok)
-    b3.grid(row=2,column=0,padx=20,pady=30)
-    l6=Label(g, text="professor (salary:65000,Collage:Anna University,Qualification:Btech holder in computer science with atleat 80% marks)")
-    l6.grid(row=3,column=0,padx=20,pady=30)
-    b3=Button(g,text="Next",command=processok)
-    b3.grid(row=4,column=0,padx=20,pady=30)
-    l7=Label(g, text="Clerk (salary:35000,Collage:Anna University,Qualification:Passed 12th with atleat 80% marks)")
-    l7.grid(row=5,column=0,padx=20,pady=30)
-    b4=Button(g,text="Next",command=processok)
-    b4.grid(row=6,column=0,padx=20,pady=30)
-    b5=Button(g,text="Exit",command=processcancel)
-    b5.grid(row=7,column=4,padx=20,pady=30)
+    file1 = filedialog.askopenfilename()
+    #file2 = filedialog.askopenfilename()
+    if(file1):
+        #my_str.set(file1)
+        #my_str.set(file2)
+        #fob=open(file1,'r')
+        documentSimilarity("zon.txt","com_tros.txt" )
 
-def apply2():
-    
-    f=Tk()
-    f.geometry("800x800")
-    l4=Label(f, text="Select post")
-    l4.grid(row=0,column=0,padx=20,pady=30)
-    l5=Label(f, text="Assistant professor (salary:100000,Collage:Delhi Technological University,Qualification:Phd holder in computer science)")
-    l5.grid(row=1,column=0,padx=20,pady=30)
-    b3=Button(f,text="Next",command=processok)
-    b3.grid(row=2,column=0,padx=20,pady=30)
-    l6=Label(f, text="professor (salary:65000,Collage:Delhi Technological University,Qualification:Btech holder in computer science with atleat 80% marks)")
-    l6.grid(row=3,column=0,padx=20,pady=30)
-    b3=Button(f,text="Next",command=processok)
-    b3.grid(row=4,column=0,padx=20,pady=30)
-    l7=Label(f, text="Clerk (salary:35000,Collage:Delhi Technological University,Qualification:Passed 12th with atleat 80% marks)")
-    l7.grid(row=5,column=0,padx=20,pady=30)
-    b4=Button(f,text="Next",command=processok)
-    b4.grid(row=6,column=0,padx=20,pady=30)
-    b5=Button(f,text="Exit",command=processcancel)
-    b5.grid(row=7,column=4,padx=20,pady=30)
-'''
 def apply():
     c=Tk()
     c.geometry("800x800")
@@ -110,18 +190,6 @@ def processok1():
     l9.grid(row=1,column=0,padx=20,pady=30)
     b1=Button(top,text="UPLOAD",command=done1)
     b1.grid(row=2,column=3,padx=20,pady=30)
-    '''
-    l10=Label(top, text="Mechanical")
-    l10.grid(row=3,column=0,padx=20,pady=30)
-    b1=Button(top,text="Apply",command=yoo)
-    b1.grid(row=4,column=3,padx=20,pady=30)
-    l11=Label(top, text='Civil')
-    l11.grid(row=5,column=0,padx=20,pady=30)
-    b1=Button(top,text="Apply",command=yoo)
-    b1.grid(row=6,column=3,padx=20,pady=30)
-    b2=Button(top,text="Exit",command=processcancel)
-    b2.grid(row=7,column=5,padx=20,pady=30)
-    '''
     label=Label(top)
     label.grid(row=7,column=4)
 def processok2():
@@ -151,22 +219,10 @@ def processcancel():
     l3.grid(row=0,column=3)
 a.title("JOB RECRUITMENT")
 a.geometry("900x800")
-#l2=Label(a, text="Select location")
-#l2.grid(row=0,column=0,padx=20,pady=30)
 l3=Label(a, text='BANGALORE')
 l3.grid(row=1,column=0,padx=20,pady=30)
 b1=Button(a,text="Next",command=apply)
 b1.grid(row=2,column=3,padx=20,pady=30)
-#l4=Label(a, text='Delhi')
-#l4.grid(row=3,column=0,padx=20,pady=30)
-#b1=Button(a,text="Next",command=apply2)
-#b1.grid(row=4,column=3,padx=20,pady=30)
-#l5=Label(a, text='Chennai')
-#l5.grid(row=5,column=0,padx=20,pady=30)
-#b1=Button(a,text="Next",command=apply3)
-#b1.grid(row=6,column=3,padx=20,pady=30)
-#b2=Button(a,text="Exit",command=processcancel)
-#b2.grid(row=7,column=4,padx=20,pady=30)
 label=Label(a)
 label.grid(row=7,column=4)
 a.mainloop()
