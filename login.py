@@ -1,6 +1,7 @@
 from tkinter import *
 import os
-
+from subprocess import call
+import re
 # Designing window for registration
 def register():
     global register_screen
@@ -26,24 +27,56 @@ def register():
     password_entry = Entry(register_screen, textvariable=password, show='*')
     password_entry.pack()
     Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10, height=1, bg="blue", command = register_user).pack()
+    Button(register_screen, text="Register", width=10, height=1, bg="blue", command =  register_user).pack()
+
+    
+
+
+def wrongregis():
+    e=Tk()
+    e.geometry("300x200")
+    l6=Label(e, text='INVALID PASSWORD, USER REGISTRATION UNSUCCESSFUL')
+    l6.grid(row=0,column=7)
+    #e.destroy()
+
+
+
+
+
+
+    
 
  # Implementing event on register button
  
 def register_user():
+    u=username.get()
+    p=password.get()
+    
+    x = True
+    
+    while x:  
+        if (len(p)<3 or len(p)>15):
+            break
+        elif not re.search("[a-z]",p):
+            break
+        else:
+            username_info = u
+            password_info = p
  
-    username_info = username.get()
-    password_info = password.get()
+            file = open(username_info, "w")
+            file.write(username_info + "\n")
+            file.write(password_info)
+            file.close()
  
-    file = open(username_info, "w")
-    file.write(username_info + "\n")
-    file.write(password_info)
-    file.close()
+            username_entry.delete(0, END)
+            password_entry.delete(0, END)
  
-    username_entry.delete(0, END)
-    password_entry.delete(0, END)
- 
-    Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
+            Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
+            x=False
+            break
+    if x:
+        wrongregis()
+    
  
 # Designing window for login 
  
@@ -130,7 +163,8 @@ def user_not_found():
 # Deleting popups
  
 def delete_login_success():
-    login_success_screen.destroy()
+    call(["python", "apply.py"])
+    
  
  
 def delete_password_not_recognised():
@@ -149,9 +183,8 @@ def main_account_screen():
     Button(text="Login", height="2", width="30", command = login).pack()
     Label(text="").pack()
     Button(text="Register", height="2", width="30", command=register).pack()
- 
+
     main_screen.mainloop()
 
- 
-main_account_screen()    
 
+main_account_screen()    

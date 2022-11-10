@@ -16,10 +16,7 @@ except ImportError:
     py3 = True
 def click_login():
     call(["python", "login.py"])
-def click_regis():
-    call(["python", "regis.py"])
-def click_find():
-    call(["python","projectpython.py"])
+
     
 class Online_Employee_Recruitment_System:
     def __init__(self):
@@ -77,26 +74,19 @@ class Online_Employee_Recruitment_System:
         self.Button2.configure(highlightbackground="#d9d9d9")
         self.Button2.configure(highlightcolor="black")
         self.Button2.configure(pady="0")
-        self.Button2.configure(text='''1.Login''')
+        self.Button2.configure(text='''1.SIGN UP/IN''')
         self.Button2.configure(width=566)
         self.Button2.configure(command=click_login)
 
-        self.Button3 = Button(self.Frame1)
-        self.Button3.place(relx=0.18, rely=0.33, height=93, width=566)
-        self.Button3.configure(activebackground="#ff6600")
-        self.Button3.configure(background="#d9d9d9")
-        self.Button3.configure(disabledforeground="#bfbfbf")
-        self.Button3.configure(font=font14)
-        self.Button3.configure(text='''2.Register Yourself''')
-        self.Button3.configure(command=click_regis)
-
+'''
         self.Button4 = Button(self.Frame1)
         self.Button4.place(relx=0.18, rely=0.48, height=90, width=566)
         self.Button4.configure(activebackground="#ff6600")
         self.Button4.configure(background="#d9d9d9")
         self.Button4.configure(disabledforeground="#bfbfbf")
         self.Button4.configure(font=font14)
-        self.Button4.configure(text='''3.Apply for Job''')
+        self.Button4.configure(text=''2.Apply for Job'')
         self.Button4.configure(command=click_find)
+'''
 if __name__ == '__main__':
     GUUEST=Online_Employee_Recruitment_System()        

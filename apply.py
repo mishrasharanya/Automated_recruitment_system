@@ -2,7 +2,6 @@ from tkinter import messagebox
 import tkinter as tk
 from tkinter import filedialog
 from tkinter.filedialog import askopenfile
-from PIL import Image, ImageTk
 from tkinter import *
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfile 
@@ -20,16 +19,17 @@ my_str.set("")
 
 
 
-def sel():
+def sel(dist):
     e=Tk()
     e.geometry("300x200")
+    #print("The distance between the documents is: % 0.6f (radians)"% distance)
     l6=Label(e, text='CONGRATULATIONS, YOU ARE SHORTLISTED FOR THE INTERVIEW ROUND')
-    l6.grid(row=0,column=7)
-def yoo():
+    l6.grid(row=2,column=7)
+def yoo(dist):
     e=Tk()
     e.geometry("300x200")
     l6=Label(e, text="THANK YOU FOR APPLYING, BETTER LUCK NEXT TIME!!")
-    l6.grid(row=0,column=7)
+    l6.grid(row=2,column=7)
 
 
 
@@ -116,22 +116,15 @@ def vector_angle(D1, D2):
 
 
 def documentSimilarity(filename_1, filename_2):
-	
-# filename_1 = sys.argv[1]
-# filename_2 = sys.argv[2]
 	sorted_word_list_1 = word_frequencies_for_file(filename_1)
 	sorted_word_list_2 = word_frequencies_for_file(filename_2)
 	distance = vector_angle(sorted_word_list_1, sorted_word_list_2)
-	
+	#print("The distance between the documents is: % 0.6f (radians)"% distance)
 	if(distance>0.35):
-            yoo()
+            yoo(distance)
 	else:
-            sel()
-            
+            sel(distance)
 
-
-
-    
 def done1():
     file1 = filedialog.askopenfilename()
     #file2 = filedialog.askopenfilename()
